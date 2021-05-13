@@ -11,14 +11,14 @@
 			board
 		<where>
 			<if test="searchWord != null">
-				board_title LIKE CONCAT('%',#{searchWord}, '%')
+				board_title LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
 		ORDER BY insert_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<select id="selectTotal" resultType="Integer" parameterType="String">
+	<select id="selectBoardTotal" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM board
 		<where>
 			<if test="searchWord != null">
@@ -27,15 +27,16 @@
 		</where>
 	</select>
 
-	<select id="selectBoardOne" parameterType="Integer" resultType="com.gd.sakila.vo.Board">
+	<select id="selectBoardOne" parameterType="Integer" resultType="java.util.Map">
 		SELECT 
 			board_id boardId,
 			board_title boardTitle,
 			board_content boardContent,
-			staff_id staffId,
-			insert_date insertDate
+			insert_date insertDate,
+			s.username userName
 		FROM
-			board
+			board b INNER JOIN staff s
+		ON b.staff_id = s.staff_id	
 		WHERE board_id = #{boardId}
 	</select>
 
@@ -44,11 +45,13 @@
 			board_pw,
 			board_title,
 			board_content,
-			insert_date,
+			staff_id,
+			insert_date
 		) VALUES (
 			PASSWORD(#{boardPw}), 
 			#{boardTitle},
 			#{boardContent},
+			#{staffId},
 			NOW()
 		)
 	</insert>

@@ -1,4 +1,4 @@
-package com.gd.sakila.cotroller;
+package com.gd.sakila.controller;
 
 import java.util.List;
 import java.util.Map;

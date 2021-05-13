@@ -17,6 +17,9 @@
       <java.version>1.8</java.version>
    </properties>
    
+   
+   
+   
    <dependencies>
    <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
       <dependency>
@@ -33,7 +36,12 @@
           <version>9.0.45</version>
       </dependency>
    
-   
+   <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.20</version>
+          <scope>provided</scope>
+      </dependency>
    
       <dependency>
          <groupId>org.springframework.boot</groupId>

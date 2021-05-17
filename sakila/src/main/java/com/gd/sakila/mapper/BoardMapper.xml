@@ -18,6 +18,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
+	
 	<select id="selectBoardTotal" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM board
 		<where>
@@ -26,6 +27,7 @@
 			</if>
 		</where>
 	</select>
+
 
 	<select id="selectBoardOne" parameterType="Integer" resultType="java.util.Map">
 		SELECT 
@@ -39,6 +41,7 @@
 		ON b.staff_id = s.staff_id	
 		WHERE board_id = #{boardId}
 	</select>
+
 
 	<insert id="insertBoard" parameterType="com.gd.sakila.vo.Board">
 		INSERT INTO board(
@@ -55,18 +58,17 @@
 			NOW()
 		)
 	</insert>
+	
 
 	<delete id="deleteBoard" parameterType="com.gd.sakila.vo.Board">
 		DELETE FROM board
 		WHERE board_id = #{boardId}
-		AND board_pw = PASSWORD(#{board})
+		AND board_pw = PASSWORD(#{boardPw})
 	</delete>
 
+
 	<update id="updateBoard" parameterType="com.gd.sakila.vo.Board">
-		UPDATE board
-		SET board_title = #{boardTitle},
-			board_content = #{boardContent}
-		WHERE board_id = #{boardId}
-		AND board_pw = PASSWORD(#{board})
-	</update>
+      UPDATE 
+      	board SET board_title = #{boardTitle}, board_content = #{boardContent} WHERE board_id = #{boardId} AND board_pw = PASSWORD(#{boardPw})
+   </update>
 </mapper>

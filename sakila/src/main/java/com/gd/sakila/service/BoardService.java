@@ -4,27 +4,65 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.gd.sakila.mapper.BoardMapper;
+import com.gd.sakila.mapper.CommentMapper;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.Comment;
 import com.gd.sakila.vo.PageParam;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class BoardService {
 	@Autowired
 	BoardMapper boardMapper;
+	@Autowired
+	CommentMapper commentMapper;
 	
+	// boardUpadte( 수정 액션 )
+	public int modifyBoard(Board board) {
+		log.debug("modifyBoard 에서 board : "+ board.toString());
+		return boardMapper.updateBoard(board);
+	}
+	
+	
+	// boardOne 삭제 매소드
+	public int removeBoard(Board board) {
+		log.debug("removeBoard 에서 board : "+ board.toString());
+		return boardMapper.deleteBoard(board);
+	}
+	
+	
+	// addBoard
 	public int addBoard(Board board) {
+		log.debug("addBoard 에서 board : "+ board.toString());
 		return boardMapper.insertBoard(board);
 	}
 
+
+	// getBoardOne
 	public Map<String, Object> getBoardOne(int boardId) { // 전체적으로 통일하기 위해서 만든다
-	      return boardMapper.selectBoardOne(boardId);
+		log.debug("getBoardOne 에서 boardId : "+ boardId);
+		// 1) 상세 보기
+		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
+		log.debug("selectBoardOne 에서 boardMap: "+boardMap);
+		// 2) 댓글 목록
+		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
+		log.debug("commentList에서 size() "+commentList.size());
+		
+		Map<String, Object> map = new HashMap<>();
+	    map.put("boardMap", boardMap);
+		map.put("commentList", commentList);
+		
+		return map;
 	}
 
 

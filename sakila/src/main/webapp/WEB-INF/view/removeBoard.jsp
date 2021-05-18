@@ -17,8 +17,8 @@
 </script>
 </head>
 <body>
-	<h2>removeBoard</h2>
-	<form  id="removeForm"  action="${pageContext.request.contextPath}/removeBoard" method="post">
+	<h2>removeBoard 삭제</h2>
+	<form  id="removeForm"  action="${pageContext.request.contextPath}/admin/removeBoard" method="post">
 		<input type="hidden" name="boardId" value="${boardId}">
 		<div>
 			<label>boardPw :</label>

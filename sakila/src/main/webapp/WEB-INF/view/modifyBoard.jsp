@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>BoardOne</title>
+<title>modifyBoard</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -29,8 +29,8 @@
 <body>
 <div class="container">
 
-    <h1>BoardOne</h1>
-    <form action="${pageContext.request.contextPath}/modifyBoard" id="modifyForm" method="post">
+    <h1>modifyBoard 수정</h1>
+    <form action="${pageContext.request.contextPath}/admin/modifyBoard" id="modifyForm" method="post">
 	    <table class="table">
 	         <tbody>
 	            <tr>
@@ -67,7 +67,7 @@
 	        </tbody>
 	    </table>
 	    <button id="btn" type="button">수정</button>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/getBoardList">글목록</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
     </form>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller // 컴포넌트로 객체가 자동으로 만들어진다. 서블릿처럼 행동하는 클래스를 상속받음
+@RequestMapping("/admin")
 public class BoardController {
    
    @Autowired // nullpointException이 발생 -> Autowired 에노테이션을 통해 객체를 주입 시켜준다
@@ -30,7 +32,7 @@ public class BoardController {
 	   
 	   // select
 	   Map<String, Object> map = boardService.getBoardOne(boardId);
-	   model.addAttribute("map", map);
+	   model.addAttribute("boardMap", map.get("boardMap"));
 	   return "modifyBoard";
    }
    
@@ -42,7 +44,8 @@ public class BoardController {
 	   // update
 	   int row = boardService.modifyBoard(board);
 	   log.debug("update row : " +row);
-	   return "redirect:/modifyBoard?boardId=" +board.getBoardId();
+	
+	   return "redirect:/admin/getBoardOne?boardId=" +board.getBoardId();
    }
    
    
@@ -64,7 +67,7 @@ public class BoardController {
 	   if(row == 0) {
 	         return "redirect:/getBoardOne?boardId=" + board.getBoardId();
 	      }
-	   return "redirect:/getBoardList";
+	   return "redirect:/admin/getBoardList";
    }
 
    
@@ -77,7 +80,7 @@ public class BoardController {
    @PostMapping("/addBoard")
    public String addBoard(Board board) { // 커맨드객체
 	   boardService.addBoard(board);
-	   return "redirect:/getBoardList";
+	   return "redirect:/admin/getBoardList";
    }
    
 
@@ -89,10 +92,11 @@ public class BoardController {
 	log.debug("controller-> getBoardOne 에서 boardId : "+boardId);
 	
 	Map<String, Object> map = boardService.getBoardOne(boardId);
-	System.out.println(map);
+	System.out.println("@@@@@@@@@@@@@@@@@@@"+ map);
 	
 	model.addAttribute("boardMap", map.get("boardMap"));
     model.addAttribute("commentList", map.get("commentList"));
+    
 	return "getBoardOne";
 	}
 

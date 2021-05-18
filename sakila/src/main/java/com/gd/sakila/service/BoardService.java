@@ -27,6 +27,7 @@ public class BoardService {
 	@Autowired
 	CommentMapper commentMapper;
 	
+	
 	// boardUpadte( 수정 액션 )
 	public int modifyBoard(Board board) {
 		log.debug("modifyBoard 에서 board : "+ board.toString());
@@ -34,11 +35,35 @@ public class BoardService {
 	}
 	
 	
-	// boardOne 삭제 매소드
+	// boardOne( 삭제 액션 )
 	public int removeBoard(Board board) {
-		log.debug("removeBoard 에서 board : "+ board.toString());
-		return boardMapper.deleteBoard(board);
+		// 디버깅
+		log.debug("removeBoard() 에서 board : "+ board.toString());
+		
+		
+		// 1. 게시글 삭제
+		int boardRow = boardMapper.deleteBoard(board);
+		if(boardRow == 0) {
+			return 0;
+		}
+		// 디버깅
+		log.debug("@@@@@@ removeBoard()에서 boardRow : " +boardRow);
+
+		
+		// 2. 댓글 삭제
+		int commentRow = commentMapper.deleteCommentByBoardId(boardRow);
+		// 디버깅
+		log.debug("@@@@@@@ removeBoard()에서 commentRow : " +commentRow);
+		
+		/*
+		// 댓글 하나씩만 삭제
+		int commentDelete = commentMapper.deleteCommentByCommentId(commentRow);
+		log.debug("@@@@@@@@ removeBoard()에서 commentDelete : " +commentDelete);
+		*/
+		
+		return boardRow;
 	}
+	
 	
 	
 	// addBoard

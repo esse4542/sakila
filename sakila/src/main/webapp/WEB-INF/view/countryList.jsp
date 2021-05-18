@@ -31,14 +31,14 @@
 	<div>
 	    <!-- 이전 -->
         <c:if test="${currentPage > 1}">
-           <a href="${pageContext.request.contextPath}/countryList?currentPage=${currentPage-1}">
+           <a href="${pageContext.request.contextPath}/admin/countryList?currentPage=${currentPage-1}">
               <button type="button">이전</button>
            </a>
         </c:if>
 
 		<!-- 다음 -->
 		<c:if test="${currentPage < lastPage}">
-		<a href="${pageContext.request.contextPath}/countryList?currentPage=${currentPage+1}"><button type="button">다음</button></a>
+		<a href="${pageContext.request.contextPath}/admin/countryList?currentPage=${currentPage+1}"><button type="button">다음</button></a>
 		</c:if>
 	</div>
 </body>

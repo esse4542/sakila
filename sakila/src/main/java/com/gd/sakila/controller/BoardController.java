@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.BoardForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +24,21 @@ public class BoardController {
    
    @Autowired // nullpointException이 발생 -> Autowired 에노테이션을 통해 객체를 주입 시켜준다
    private BoardService boardService;
+   
+   
+   // 추가
+   @GetMapping("/addBoard")
+   public String addBoard() {
+	   return "addBoard";
+   }
+   
+   @PostMapping("/addBoard")
+   public String addBoard(BoardForm boardForm) { // 커맨드객체
+	   log.debug("boardForm :"+boardForm.toString());
+	   boardService.addBoard(boardForm); // param board -> boardForm 으로 변경
+	   return "redirect:/admin/getBoardList";
+   }
+   
    
    
    // 수정 폼
@@ -70,18 +86,6 @@ public class BoardController {
 	   return "redirect:/admin/getBoardList";
    }
 
-   
-   // 추가
-   @GetMapping("/addBoard")
-   public String addBoard() {
-	   return "addBoard";
-   }
-   
-   @PostMapping("/addBoard")
-   public String addBoard(Board board) { // 커맨드객체
-	   boardService.addBoard(board);
-	   return "redirect:/admin/getBoardList";
-   }
    
 
    

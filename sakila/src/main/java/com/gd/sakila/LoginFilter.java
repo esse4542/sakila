@@ -24,15 +24,16 @@ public class LoginFilter implements Filter {
 	   //요청전
       log.debug("filter◆◆◆◆◆◆ LoginFilter 요청 전");
       
+      /*
       HttpSession session = null;
       if(request instanceof HttpServletRequest) {
          session = ((HttpServletRequest)request).getSession();
       }
-      /*
+      
       // 로그인 필터 개발모드에서는 주석처리
       if(session.getAttribute("loginStaff") == null) {
          if(response instanceof HttpServletResponse) {
-            ((HttpServletResponse)response).sendRedirect("/");
+            ((HttpServletResponse)response).sendRedirect("/"); // home.jsp
          }
          return;
       }

@@ -24,6 +24,26 @@ public class BoardController {
    
    @Autowired // nullpointException이 발생 -> Autowired 에노테이션을 통해 객체를 주입 시켜준다
    private BoardService boardService;
+  
+
+   
+   @GetMapping("/getBoardOne")
+   public String getBoardOne(Model model, 
+           @RequestParam(value="boardId", required = true) int boardId) { // View가 있으면 모델이 존재
+	// 디버깅
+	log.debug("controller-> getBoardOne 에서 boardId : "+boardId);
+	
+	Map<String, Object> map = boardService.getBoardOne(boardId);
+	System.out.println("@@@@@@@@@@@@@@@@@@@"+ map);
+	
+	model.addAttribute("boardMap", map.get("boardMap"));
+	model.addAttribute("boardfileList", map.get("boardfileList")); //파일 추가
+    model.addAttribute("commentList", map.get("commentList"));
+    
+	return "getBoardOne";
+	}
+
+
    
    
    // 추가
@@ -38,6 +58,7 @@ public class BoardController {
 	   boardService.addBoard(boardForm); // param board -> boardForm 으로 변경
 	   return "redirect:/admin/getBoardList";
    }
+   
    
    
    
@@ -66,6 +87,7 @@ public class BoardController {
    
    
    
+   
    // 삭제 폼
    // 리턴타입 뷰이름 문자열 C -> V
    @GetMapping("/removeBoard")
@@ -86,24 +108,8 @@ public class BoardController {
 	   return "redirect:/admin/getBoardList";
    }
 
+ 
    
-
-   
-   @GetMapping("/getBoardOne")
-   public String getBoardOne(Model model, 
-           @RequestParam(value="boardId", required = true) int boardId) { // View가 있으면 모델이 존재
-	// 디버깅
-	log.debug("controller-> getBoardOne 에서 boardId : "+boardId);
-	
-	Map<String, Object> map = boardService.getBoardOne(boardId);
-	System.out.println("@@@@@@@@@@@@@@@@@@@"+ map);
-	
-	model.addAttribute("boardMap", map.get("boardMap"));
-    model.addAttribute("commentList", map.get("commentList"));
-    
-	return "getBoardOne";
-	}
-
    
    @GetMapping("/getBoardList")
    public String getBoardList(Model model, @RequestParam(value="currentPage", defaultValue = "1") int currentPage, @RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage, @RequestParam(value="searchWord", required = false) String searchWord) {

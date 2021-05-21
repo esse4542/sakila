@@ -19,6 +19,7 @@ $(document).ready(function() {
 <body>
 	<h2>Home</h2>
 	<!-- 로그인 안되어 있을때 -->
+	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
 	<c:if test="${loginStaff == null}">
 		<form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
 			<div>

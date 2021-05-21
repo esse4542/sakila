@@ -34,12 +34,40 @@ public class BoardService {
 	@Autowired
 	BoardfileMapper boardfileMapper;
 	
+
+	// getBoardOne
+	public Map<String, Object> getBoardOne(int boardId) { // 전체적으로 통일하기 위해서 만든다
+		log.debug("getBoardOne 에서 boardId : "+ boardId);
+		
+		// 1) 상세 보기
+		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
+		log.debug("selectBoardOne 에서 boardMap: "+boardMap);
+		
+		// 2) boardfile 목록
+		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(boardId); //추가
+		//log.debug("selectBoardfileByBoardId 에서 boardfileList: "+boardfileList);
+		
+		// 3) 댓글 목록
+		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
+		log.debug("commentList에서 size() "+commentList.size());
+		
+		Map<String, Object> map = new HashMap<>();
+	    map.put("boardMap", boardMap);
+	    map.put("boardfileList", boardfileList);
+		map.put("commentList", commentList);
+		
+		return map;
+	}
+
+	
+	
 	
 	// boardUpadte( 수정 액션 )
 	public int modifyBoard(Board board) {
 		log.debug("modifyBoard 에서 board : "+ board.toString());
 		return boardMapper.updateBoard(board);
 	}
+	
 	
 	
 	// boardOne( 삭제 액션 )
@@ -70,6 +98,7 @@ public class BoardService {
 		
 		return boardRow;
 	}
+	
 	
 	
 	
@@ -111,8 +140,11 @@ public class BoardService {
 				
 				// 2-2)
 				// 파일을 저장
-				try {
-						f.transferTo(new File("C:\\upload\\"+filename));
+				try {	
+						// 파일 저장하기 추가
+						File temp = new File(""); // 프로젝트 폴더에 빈 파일 만들어짐.
+						String path = temp.getAbsolutePath(); // 프로젝트 폴더
+						f.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+filename)); // 경로
 				} catch (Exception e) {
 						throw new RuntimeException();
 				} 
@@ -122,23 +154,6 @@ public class BoardService {
 	}
 
 
-
-	// getBoardOne
-	public Map<String, Object> getBoardOne(int boardId) { // 전체적으로 통일하기 위해서 만든다
-		log.debug("getBoardOne 에서 boardId : "+ boardId);
-		// 1) 상세 보기
-		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
-		log.debug("selectBoardOne 에서 boardMap: "+boardMap);
-		// 2) 댓글 목록
-		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
-		log.debug("commentList에서 size() "+commentList.size());
-		
-		Map<String, Object> map = new HashMap<>();
-	    map.put("boardMap", boardMap);
-		map.put("commentList", commentList);
-		
-		return map;
-	}
 
 
 	// 

@@ -57,13 +57,33 @@
                 <td>insert_date :</td>
                 <td>${boardMap.insertDate}</td>
             </tr>
+            <tr>
+                <td>BoardFile :</td>
+                <td>
+                	<div>
+                		<!-- 파일 수정 -->
+                		<a href=""><button type="button">파일추가</button></a>
+                	</div>
+                	<!-- 반복문(보드파일을 출력하는 반복문 코드 구현) -->
+                	<c:forEach var="f" items="${boardfileList}">
+                		<div>
+                			<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
+                			
+                			<!-- 파일 삭제 -->
+                			<a href=""><button type="button">파일삭제</button></a>
+                		</div>
+                	</c:forEach>
+                </td>
+            </tr>
         </tbody>
     </table>
-    
+    <br>
+    <!-- 전체 수정시 파일 수정 x -->
     <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">수정</a>
+    <!-- 전체 삭제시 파일 삭제 o(만들어야함) -->
     <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">삭제</a>
     <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
-	
+	<br>
 	<!-- 댓글 목록 -->
       <div>
        <form id="addCommentForm" action="${pageContext.request.contextPath}/admin/addComment">

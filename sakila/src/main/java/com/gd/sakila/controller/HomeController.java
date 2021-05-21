@@ -1,5 +1,7 @@
 package com.gd.sakila.controller;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ public class HomeController {
 	public String home() {
 		//System.out.println("home..."); //"/home", "index" 이게 나와도 home으로 출력
 		log.debug("test");
+
 		return "home"; //로그인
 	}
 	

@@ -34,6 +34,58 @@ public class BoardService {
 	@Autowired
 	BoardfileMapper boardfileMapper;
 	
+	
+
+	// boardOne( 삭제 액션 )
+	public int removeBoard(Board board) {
+		// 디버깅
+		log.debug("removeBoard() 에서 board : "+ board.toString());
+		
+		
+		// 1. 게시글 삭제
+		int boardRow = boardMapper.deleteBoard(board);
+		if(boardRow == 0) {
+			return 0;
+		}
+		// 디버깅
+		log.debug("@@@@@@ removeBoard()에서 boardRow : " +boardRow);
+
+		
+		// 2. 댓글 삭제
+		int commentRow = commentMapper.deleteCommentByBoardId(boardRow);
+		// 디버깅
+		log.debug("@@@@@@@ removeBoard()에서 commentRow : " +commentRow);
+		
+		
+		// 3. 물리적 파일 삭제(/resource안에 파일)
+		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(board.getBoardId());
+		if(boardfileList != null ) {
+			for(Boardfile f : boardfileList) {
+				File temp = new File(""); //프로젝트 폴더에 빈 파일이 만들어진다.
+				String path = temp.getAbsolutePath(); // path: 프로젝트 폴더
+	            File file = new File(path+"\\src\\main\\webapp\\resource\\"+f.getBoardfileName()); 
+	            file.delete();	
+			}
+		}
+		
+		// 4. 파일 테이블 행 삭제
+		int boardfileRow = boardfileMapper.deleteBoardfileByBoardId(board.getBoardId());
+		log.debug("deletefile : " + boardfileRow);	
+				
+		
+		/*
+		// 댓글 하나씩만 삭제
+		int commentDelete = commentMapper.deleteCommentByCommentId(commentRow);
+		log.debug("@@@@@@@@ removeBoard()에서 commentDelete : " +commentDelete);
+		*/
+		
+		return boardRow;
+	}
+	
+	
+	
+	
+	
 
 	// getBoardOne
 	public Map<String, Object> getBoardOne(int boardId) { // 전체적으로 통일하기 위해서 만든다
@@ -69,35 +121,6 @@ public class BoardService {
 	}
 	
 	
-	
-	// boardOne( 삭제 액션 )
-	public int removeBoard(Board board) {
-		// 디버깅
-		log.debug("removeBoard() 에서 board : "+ board.toString());
-		
-		
-		// 1. 게시글 삭제
-		int boardRow = boardMapper.deleteBoard(board);
-		if(boardRow == 0) {
-			return 0;
-		}
-		// 디버깅
-		log.debug("@@@@@@ removeBoard()에서 boardRow : " +boardRow);
-
-		
-		// 2. 댓글 삭제
-		int commentRow = commentMapper.deleteCommentByBoardId(boardRow);
-		// 디버깅
-		log.debug("@@@@@@@ removeBoard()에서 commentRow : " +commentRow);
-		
-		/*
-		// 댓글 하나씩만 삭제
-		int commentDelete = commentMapper.deleteCommentByCommentId(commentRow);
-		log.debug("@@@@@@@@ removeBoard()에서 commentDelete : " +commentDelete);
-		*/
-		
-		return boardRow;
-	}
 	
 	
 	

@@ -4,6 +4,23 @@
 	
 	
 	
+	<!-- 게시글 삭제 시 참조되는 모든 파일 삭제 -->
+	<delete id="deleteBoardfileByBoardId" parameterType="int">
+		DELETE FROM boardfile
+		WHERE board_id = #{boardId}
+	</delete>
+	
+	
+	
+	
+	<!-- boardfile 하나 삭제 -->
+	<delete id="deleteBoardfileOne">
+		DELETE FROM boardfile
+		WHERE boardfile_id = #{boardfileId}
+	</delete>
+	
+	
+	
 	
 	<!-- 하나의 게시글에 참조되는 boardfile select -->
 	<!-- 
@@ -16,15 +33,18 @@
 			parameterType="int"
 			resultType="com.gd.sakila.vo.Boardfile"> <!-- resultType : return type X, 리스트의 제네릭 타입 O -->
 		SELECT 
+			boardfile_id boardfileId,
+			board_id boardId,
 			boardfile_name boardfileName, <!-- 카멜 표현식>?? -->
 			boardfile_size boardfileSize
 		FROM boardfile
 		WHERE board_id = #{boardId}
 	</select>
 
+
 	
 	
-	
+	<!-- 입력 -->
 	<insert id="insertBoardfile" parameterType="com.gd.sakila.vo.Boardfile">
 		INSERT INTO boardfile(
 			board_id,

@@ -11,5 +11,5 @@
 		WHERE email = #{email} <!-- getEmail() -->
 		AND password = PASSWORD(#{password})	<!-- getPassword() -->
 	</select>
-
+	
 </mapper>

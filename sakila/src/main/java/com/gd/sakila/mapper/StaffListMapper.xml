@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.StaffListMapper">
+
+	<!-- boardList참고 -->
+	<select id="selectStaffList" resultType="com.gd.sakila.vo.StaffView">
+		SELECT
+			ID,
+			name,
+			SID
+		FROM
+			staff_list
+		<where>
+			<if test="searchWord != null">
+				name LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+		ORDER BY ID ASC
+		LIMIT #{beginRow}, #{rowPerPage}	
+	</select>
+	
+	
+	<select id="selectStaffListOne" parameterType="Integer" resultType="java.util.Map">
+		SELECT
+			Id,
+			name,
+			address,
+			'zip code',
+			phone,
+			city,
+			country,
+			SID
+		FROM staff_list
+		WHERE id = #{staffId}
+	</select>
+	
+	
+</mapper>

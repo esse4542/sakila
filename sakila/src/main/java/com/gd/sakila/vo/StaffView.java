@@ -2,7 +2,6 @@ package com.gd.sakila.vo;
 
 import lombok.Data;
 
-
 @Data
 public class StaffView {
 	private int ID;

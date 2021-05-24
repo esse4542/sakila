@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gd.sakila.vo.PageParam;
 import com.gd.sakila.vo.Staff;
-import com.gd.sakila.vo.StaffList;
+import com.gd.sakila.vo.StaffView;
 
 /*
  * @Componetn, @Repository, @Service, @Controller -> Bean -> spring.getBean(클래스타입), @AutoWired <- Dependecy Inject

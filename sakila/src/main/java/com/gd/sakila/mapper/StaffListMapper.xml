@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.StaffListMapper">
-
 	<!-- boardList참고 -->
 	<select id="selectStaffList" resultType="com.gd.sakila.vo.StaffView">
 		SELECT
 			ID,
 			name,
-			SID
+			SID,
+			address,
+			city,
+			country
 		FROM
 			staff_list
 		<where>
@@ -20,7 +22,7 @@
 	</select>
 	
 	
-	<select id="selectStaffListOne" parameterType="Integer" resultType="java.util.Map">
+	<select id="selectStaffOne" parameterType="Integer" resultType="java.util.Map">
 		SELECT
 			Id,
 			name,

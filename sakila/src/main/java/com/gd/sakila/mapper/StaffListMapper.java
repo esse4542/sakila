@@ -6,10 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gd.sakila.vo.PageParam;
-import com.gd.sakila.vo.StaffList;
+import com.gd.sakila.vo.StaffView;
 
 @Mapper
 public interface StaffListMapper {
-	List<StaffList> selectStaffList(PageParam page);
+	List<StaffView> selectStaffList(PageParam page);
 	Map<String, Object> selectStaffOne(int ID);
 }

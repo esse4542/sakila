@@ -12,7 +12,7 @@ import com.gd.sakila.mapper.StaffListMapper;
 import com.gd.sakila.mapper.StaffMapper;
 import com.gd.sakila.vo.PageParam;
 import com.gd.sakila.vo.Staff;
-import com.gd.sakila.vo.StaffList;
+import com.gd.sakila.vo.StaffView;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +39,7 @@ public class StaffService {
 		page.setBeginRow((currentPage-1)*rowPerPage);
 		page.setRowPerPage(rowPerPage);
 		page.setSearchWord(searchWord);
-		List<StaffList> staffList = staffListMapper.selectStaffList(page);
+		List<StaffView> staffList = staffListMapper.selectStaffList(page);
 		
 		//
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -3,7 +3,7 @@ package com.gd.sakila.vo;
 import lombok.Data;
 
 @Data
-public class StaffList {
+public class StaffView {
 	private int ID;
 	private String name;
 	private String address;

@@ -10,7 +10,12 @@ import com.gd.sakila.vo.PageParam;
 
 @Mapper
 public interface FilmMapper {
+	// TOTAL
 	int selectFilmTotal(String searchWord); 
-	List<FilmView> selectFilmList(PageParam page);
+	// FilmOne
+	Map<String, Object> selectFilmOne(int filmId);
+	// FilmList
+	List<Map<String, Object>> selectFilmList(Map<String, Object> map);
+
 	List<Integer> selectFilmInStock(Map<String, Object> map); // int가 아니라 List<Integer>로 받아야함.
 }

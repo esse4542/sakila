@@ -16,29 +16,42 @@
 	
 	
 	<!-- FilmList -->
-	<select id="selectFilmList" parameterType="com.gd.sakila.vo.PageParam" resultType="com.gd.sakila.vo.FilmView">
+	<select id="selectFilmList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT 
 			FID,
 			title,
-			description,
 			category,
 			price,
-			length,
-			rating,
-			actors
+			rating
 		FROM
-			nicer_but_slower_film_list
-		<where>
-			<if test="searchWord != null "> <!-- null이 아닐때 -->
-				title LIKE CONCAT('%', #{searchWord}, '%') OR actors LIKE CONCAT('%', #{searchWord}, '%')
-			</if>	
+			film_list
+		<where> <!-- WHERE문 안에 IF문 중복해서 생성 가능 -->
+			<if test="categoryName != null"> <!-- 조건 안에는 자바코드식 -->
+				AND category = #{categoryName}
+			</if>
+			
+			<if test="price != null">
+				AND price = #{price}
+			</if>
+			
+			<if test="rating != null">
+				AND rating = #{rating}
+			</if>
+			
+			<if test="searchWord != null">
+				AND title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+			
+			<if test="searchActors != null">
+				AND actors LIKE CONCAT('%', #{searchActors}, '%')
+			</if>
 		</where>
 		ORDER BY FID ASC
-		LIMIT #{beginRow}, #{rowPerPage}			
+		LIMIT #{beginRow}, #{rowPerPage}		
 	</select>
 	
 	
-	
+
 	<!-- FilmTotal () , selectList보여줄 때 total도 필요함 -->
 	<select id="selectFilmTotal" parameterType="String" resultType="int">
 		SELECT 
@@ -50,6 +63,32 @@
 				title LIKE CONCAT('%', #{searchWord}, '%')
 			</if>	
 		</where>	
+	</select>
+	
+	
+	<!-- FilmOne -->
+	<select id="selectFilmOne" parameterType="int" resultType="java.util.Map">
+		SELECT
+			f.film_id filmId,
+			f.title title,
+			f.description description,
+			f.release_year releaseYear,
+			l.name language,
+			f.original_language_id originalLaguageId,
+			f.rental_duration rentalDuration,
+			f.rental_rate rentalRate,
+			f.length length,
+			f.replacement_cost replacementCost,
+			f.rating rating,
+			f.special_features specialFeatures,
+			f.last_update lastUpdate,
+			v.actors actors
+		FROM
+			film f 
+				LEFT JOIN nicer_but_slower_film_list v ON f.film_id = v.FID
+				JOIN language l ON f.language_id = l.language_id
+		WHERE
+			film_id = #{filmId}
 	</select>
 	
 </mapper>

@@ -97,25 +97,49 @@ public class FilmService {
 	
 	// map안에는 film, filmCount 두개를 넣기.
 	public Map<String, Object> getFilmOne(int filmId, int storeId) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("filmId", filmId);
-		paramMap.put("storeId", storeId);
-		int filmCount = 0;
-		paramMap.put("filmCount", filmCount);
 		
 		// filmOne 호출
 		Map<String,Object> filmMap = filmMapper.selectFilmOne(filmId);
-		filmMap.put("filmCount", paramMap.get("filmCount"));
-		filmMap.put("filmMap", filmMap);
+		//filmMap.put("filmCount", paramMap.get("filmCount"));
+		//filmMap.put("filmMap", filmMap);
 		
-		List<Integer> list = filmMapper.selectFilmInStock(paramMap); // 프로시저 호출
-		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> filmCount : "+ paramMap.get("filmCount"));
-		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> list : " +list);
+		
+		// 1번 재고량
+		Map<String, Object> paramMap1 = new HashMap<String, Object>();
+		paramMap1.put("filmId", filmId);
+		paramMap1.put("storeId", 1);
+		int filmCount1 = 0;
+		paramMap1.put("filmCount", filmCount1);
+		
+	
+		List<Integer> store1Stock  = filmMapper.selectFilmInStock(paramMap1); // 프로시저 호출
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> filmCount : "+ paramMap1.get("filmCount"));
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> store1Stock  : " +store1Stock );
 		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> filmMap : " +filmMap);
+		
+		
+		// 2번 재고량
+		// 1번 재고량
+		Map<String, Object> paramMap2 = new HashMap<String, Object>();
+		paramMap2.put("filmId", filmId);
+		paramMap2.put("storeId", 2);
+		int filmCount2 = 0;
+		paramMap2.put("filmCount", filmCount2);
+		
+	
+		List<Integer> store2Stock  = filmMapper.selectFilmInStock(paramMap2); // 프로시저 호출
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> filmCount : "+ paramMap2.get("filmCount"));
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> list : " +store2Stock );
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에 있는 getFilmOne -> filmMap : " +filmMap);
+		
+		
 		
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("filmMap", filmMap);
+		returnMap.put("store1Stock", paramMap1.get("filmCount"));
+		returnMap.put("store2Stock", paramMap2.get("filmCount"));
+		
 		return returnMap;
 	}
 }

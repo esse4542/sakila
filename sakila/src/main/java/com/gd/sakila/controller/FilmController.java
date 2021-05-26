@@ -99,12 +99,28 @@ public class FilmController {
 	
 	@GetMapping("/getFilmOne")
 	public String getFilemOne(Model model, @RequestParam(value="filmId", required=true) int filmId, 
-											@RequestParam(value="storeId", defaultValue="1",required=true) int storeId) {
+											@RequestParam(value="storeId", defaultValue="1",required=true) int storeId,
+											@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
+											@RequestParam(value="searchWord", required = false ) String searchWord,
+											@RequestParam(value="searchActor", required = false ) String searchActor,
+											@RequestParam(value="category", required = false ) String category,
+											@RequestParam(value="rating", required = false ) String rating,
+											@RequestParam(value="rentalRate", required = false ) String rentalRate) {
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> category : "+category);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> searchWord : "+searchWord);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> currentPage : "+currentPage);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> filmId : "+filmId);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> rating : "+rating);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> storeId : "+storeId);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> rentalRate : "+rentalRate);
+		
 		Map<String, Object> map = filmService.getFilmOne(filmId, 1); // 1,1 넣으면 filmCount는 4가 나와야함. 
 		model.addAttribute("filmId", filmId);
-		model.addAttribute("storeId", storeId);
+		model.addAttribute("store1Stock", map.get("store1Stock"));
+		model.addAttribute("store2Stock", map.get("store2Stock"));
 		model.addAttribute("filmMap", map.get("filmMap"));
 		model.addAttribute("filmCount", map.get("filmCount"));
+		
 		
 		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> filmId : " +filmId);
 		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 getFilmOne -> storeId : " +storeId);

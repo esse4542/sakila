@@ -24,6 +24,16 @@ public class FilmService {
 	@Autowired
 	CategoryMapper categoryMapper;
 	
+	
+	
+	public List<Map<String, Object>> getFilmActorListByFilm(int filmId) {
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ ◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ ◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ ◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆filmId"+filmId);
+		
+		return filmMapper.selectFilmActorListByFilm(filmId);
+	}
+	
+	
+	
 	// 필름리스트
 	public Map<String, Object> getFilmList(String categoryName, Double price, 
 											String searchWord, int currentPage, int rowPerPage, String rating, String searchActors) {

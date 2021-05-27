@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
 	
+	
+	<!--  -->
+	<select id="selectFilmActorListByFilm" parameterType="int" resultType="java.util.Map">
+		SELECT 
+			a.actor_id actorId,
+			CONCAT(first_name, ' ', last_name) name,
+			film_id filmId
+		FROM		
+			actor a LEFT JOIN (
+								SELECT *
+								FROM film_actor
+								WHERE film_id=#{filmId} ) t
+			ON a.actor_id = t.actor_id	
+		ORDER BY first_name ASC	
+	</select>
+	
+	
+	
+	
 	<!-- Map : filmId(in입력), storeId(in입력), filmCount(out.출력) -->
 	<select id="selectFilmInStock" parameterType="java.util.Map" resultType="int" statementType="CALLABLE"> <!-- 프로시저 부를때 {}사용 --> <!-- statementType="CALLABLE"이것도 써야함. -->
 		{ 

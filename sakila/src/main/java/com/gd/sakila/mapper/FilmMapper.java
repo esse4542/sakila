@@ -18,4 +18,7 @@ public interface FilmMapper {
 	List<Map<String, Object>> selectFilmList(Map<String, Object> map);
 
 	List<Integer> selectFilmInStock(Map<String, Object> map); // int가 아니라 List<Integer>로 받아야함.
+	
+	// actorFilmList
+	List<Map<String, Object>> selectFilmActorListByFilm(int filmId);
 }

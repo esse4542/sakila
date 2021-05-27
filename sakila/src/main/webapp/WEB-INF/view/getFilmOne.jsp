@@ -60,12 +60,15 @@
                    <td>rating :</td>
                    <td>${filmMap.rating}</td>
             </tr>
+            
             <tr>
                    <td>specialFeatures :</td>
                    <td>${filmMap.specialFeatures}</td>
             </tr>
             <tr>
-                   <td>actors :</td>
+                   <td>
+                   	<a href="${pageContext.request.contextPath}/admin/getFilmActorListByFilm?filmId=${filmId}"><button type="button">출연자 배우 수정</button></a>
+                   	actors :</td>
                    <td>${filmMap.actors}</td>
             </tr>
             <tr>

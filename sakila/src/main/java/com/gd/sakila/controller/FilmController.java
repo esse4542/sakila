@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +21,36 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmController {
 	@Autowired
 	FilmService filmService;
+	
+	@PostMapping("/modifyFilmActor")
+	public String modifyFilmActor(@RequestParam(value = "filmId", required = true) int filmId,
+						          @RequestParam(value = "ck")int[] ck) {
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 modifyFilmActor -> filmId : "+filmId);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 modifyFilmActor -> ck length: "+ck.length); //배열 출력
+		
+		// service - mapper
+		// delete from film_actor where film_id = #{filmId}
+		// for{
+		// insert into(actor_id, film_id) values(#{ck[0]}, #{filmId})
+		// }
+		
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
+	
+	
+	
+	//
+	@GetMapping("/getFilmActorListByFilm")
+	public String getFilmActorListByFilm(Model model, @RequestParam(value = "filmId", required = true) int filmId) {
+		List<Map<String, Object>> list = filmService.getFilmActorListByFilm(filmId);
+		log.debug("list Size() : "+list.size());
+		
+		model.addAttribute("filmActorList", list);
+		model.addAttribute("filmId", filmId);
+		return "getFilmActorListByFilm";
+	}
+	
+	
 	
 	
 	// 필름 리스트

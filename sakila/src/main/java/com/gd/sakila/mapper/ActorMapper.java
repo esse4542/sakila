@@ -11,5 +11,6 @@ import com.gd.sakila.vo.Actor;
 public interface ActorMapper {
 	int insertActor(Actor actor);
 	int selectActorTotal(String seachWord);
+	// actorList
 	List<Map<String, Object>> selectActorInfoList(Map<String, Object> map);
 }

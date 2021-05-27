@@ -22,15 +22,19 @@ public class ActorController {
 	@Autowired
 	ActorService actorService;
 	
+	
+	
 	@GetMapping("/addActor")
 	public String addActor() {
 		return "addActor";
 	}
 	@PostMapping("/addActor")
 	public String addActor(Actor actor) {
-		return "redirect:/admin/actorList";
+		actorService.addActor(actor);
+		return "redirect:/admin/getActorList";
 	}
 	
+
 	
 	@GetMapping("/getActorList") // actor_view
 	public String getActorList(Model model, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage,

@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.Film;
+import com.gd.sakila.vo.FilmForm;
 import com.gd.sakila.vo.FilmView;
 import com.gd.sakila.vo.PageParam;
 
@@ -23,6 +26,37 @@ public class FilmService {
 	FilmMapper filmMapper;
 	@Autowired
 	CategoryMapper categoryMapper;
+	@Autowired
+	
+	
+	
+	// CategoryService.class로 이동해야함.
+	public List<Category> getCategoryList() {
+		return categoryMapper.selectCategoryList();
+	}
+	
+	
+	
+	//
+	public int addFilm(FilmForm filmForm) {
+		
+		Film film = filmForm.getFilm(); // 만들어줌
+		filmMapper.insertFilm(film); //이렇게 하면 받을 수 없기때문에, filmId가 생성된 후 film.setFilmId(생성된 값) 호출
+		
+		Map<String, Object> map = new HashMap<>(); // 맵 안에 categoryId, filmId 들어가야함
+		map.put("categoryId", filmForm.getCategory().getCategoryId());
+		map.put("filmId", film.getFilmId());
+		filmMapper.insertFilmCategory(map);
+		
+		return film.getFilmId();  
+		/*
+		 * param : film입력 폼
+		 * return : 입력된 filmId값
+		 */
+	}
+	
+	
+	
 	
 	
 	//수정 및 삭제 (배우)
@@ -84,7 +118,10 @@ public class FilmService {
 		
 		
 		List<Map<String, Object>> filmList = filmMapper.selectFilmList(paramMap);
-		List<String> categoryNameList = categoryMapper.selectCategoryNameList();
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에서 getFilmList -> filmList : "+ filmList);
+		
+		List<Category> categoryNameList = categoryMapper.selectCategoryList();
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에서 getFilmList -> categoryNameList : "+ categoryNameList);
 	
 		// 컨트롤러에서 사용 할 수 있는 맵
 		Map<String, Object> returnMap = new HashMap<>();

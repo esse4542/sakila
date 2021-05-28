@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.FilmService;
+import com.gd.sakila.service.LanguageService;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.FilmForm;
+import com.gd.sakila.vo.Language;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +26,36 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmController {
 	@Autowired
 	FilmService filmService;
+	@Autowired
+	LanguageService languageService;
+	
+	
+	@GetMapping("/addFilm")
+	public String addFilm(Model model) {
+		//categoryList
+		List<Category> categoryList =  filmService.getCategoryList(); 
+		List<Language> languageList = languageService.getLanguageList();
+		
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("languageList", languageList);
+		return "addFilm";
+	}
+	
+	
+	@PostMapping("/addFilm") // 기본(값)타입 매개변수의 이름과 name이 같으면 맵핑 setFilmId
+	public String addFilm(FilmForm filmForm) {  // 참조타입은 필드명과 named 같으면 맵핑
+		
+		log.debug("*************"+filmForm.getFilm().toString());
+		
+		int filmId = filmService.addFilm(filmForm);
+
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
+	
+	
+	
+	
+	
 	
 	@GetMapping("/modifyFilmActor")
 	public String modifyFilmActor(Model model, @RequestParam(value = "filmId", required = true) int filmId) {

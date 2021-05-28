@@ -5,11 +5,18 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gd.sakila.vo.Film;
 import com.gd.sakila.vo.FilmView;
 import com.gd.sakila.vo.PageParam;
 
 @Mapper
 public interface FilmMapper {
+
+	//
+	int insertFilmCategory(Map<String, Object> map);
+	//
+	int insertFilm(Film film);
+	
 	// TOTAL
 	int selectFilmTotal(String searchWord); 
 	// FilmOne

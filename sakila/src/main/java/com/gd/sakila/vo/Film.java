@@ -9,12 +9,12 @@ public class Film {
 	private String description;
 	private int releaseYear;
 	private int languageId;
-	private int originalLaguageId;
+	private int originalLanguageId;
 	private int rentalDuration;
 	private double rentalRate;
 	private int length;
 	private double replacementCost;
 	private String rating;
-	private String specialFeatures;
+	private String specialFeatures; //  set<String>: 중복 제거
 	private String lastUpdate;
 }

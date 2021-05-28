@@ -21,4 +21,9 @@ public interface FilmMapper {
 	
 	// actorFilmList
 	List<Map<String, Object>> selectFilmActorListByFilm(int filmId);
+	
+	//insertActor
+	int insertActor(Map<String, Object> map);
+	// deleteActor
+	int deleteActor(int filmId);
 }

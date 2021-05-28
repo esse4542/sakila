@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,11 +23,39 @@ public class FilmController {
 	@Autowired
 	FilmService filmService;
 	
-	@PostMapping("/modifyFilmActor")
-	public String modifyFilmActor(@RequestParam(value = "filmId", required = true) int filmId,
-						          @RequestParam(value = "ck")int[] ck) {
+	@GetMapping("/modifyFilmActor")
+	public String modifyFilmActor(Model model, @RequestParam(value = "filmId", required = true) int filmId) {
 		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 modifyFilmActor -> filmId : "+filmId);
-		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 modifyFilmActor -> ck length: "+ck.length); //배열 출력
+		
+		//Map<String, Object> filmMap = filmService.getFilmActorListByFilm(map);
+		
+		//model.addAttribute("actorList", filmMap.get("actorList")); //선언 하지 않았을때 불러오는 방법
+		//model.addAttribute("filmId", filmId);
+		
+		return "filmMap";
+	}
+	
+	
+	
+	@PostMapping("/modifyFilmActor")
+	public String modifyFilmActor(
+						          @RequestParam(value = "actorId", required = false) int[] actorId,
+						          													int filmId) {
+		
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 modifyFilmActor -> actorId: "+actorId); //배열 출력
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 modifyFilmActor -> filmId : "+filmId);
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		
+		if(actorId != null) {
+			for(int actor : actorId) {
+				log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmController에 있는 modifyFilmActor -> actor : "+actor);
+			}
+			paramMap.put("actorId", actorId);
+		}
+		paramMap.put("filmId", filmId);
+		
+		filmService.modifyFilmActor(paramMap);
 		
 		// service - mapper
 		// delete from film_actor where film_id = #{filmId}

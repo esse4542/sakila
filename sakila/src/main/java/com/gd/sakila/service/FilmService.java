@@ -25,9 +25,35 @@ public class FilmService {
 	CategoryMapper categoryMapper;
 	
 	
+	//수정 및 삭제 (배우)
+	public void modifyFilmActor(Map<String, Object> map) {
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에서 modifyFilmActor -> map : "+map);
+		
+		// delete (삭제)
+		int deleteActor = filmMapper.deleteActor((int)map.get("filmId"));
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에서 modifyFilmActor -> deleteActor : "+deleteActor);
+		
+		if(map.get("actorId") != null ) {
+			for(int atoar : (int[])map.get("actorId")) {
+				log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에서 modifyFilmActor -> atoar : "+atoar);
+				
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("actorId", atoar);
+				paramMap.put("filmId", map.get("filmId"));
+				
+				// 입력(수정) 넣기
+				int insertActor = filmMapper.insertActor(paramMap);
+				log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에서 modifyFilmActor -> insertActor : "+insertActor);
+				
+			}
+		}
+	}
 	
+	
+	
+	// 배우 전체 보여주기
 	public List<Map<String, Object>> getFilmActorListByFilm(int filmId) {
-		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ ◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ ◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ ◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆filmId"+filmId);
+		log.debug("◆■◆◆■◆◆■◆◆■◆◆■◆◆■◆ FilmService에서 getFilmActorListByFilm -> filmId"+filmId);
 		
 		return filmMapper.selectFilmActorListByFilm(filmId);
 	}

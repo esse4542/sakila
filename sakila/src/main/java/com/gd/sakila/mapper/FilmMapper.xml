@@ -3,7 +3,32 @@
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
 	
 	
-	<!--  -->
+	<!-- 배우 삭제 -->
+	<delete id="deleteActor" parameterType="int"> <!-- id가 int -->
+		DELETE 
+		FROM
+			film_actor <!-- film_actor에서 -->
+		WHERE
+			film_id = #{filmId} <!-- 필름 아이디가 같아야 삭제가능 -->	
+	</delete>
+	
+	
+	
+	<!-- 배우 입력 -->
+	<insert id="insertActor" parameterType="java.util.Map">
+		INSERT INTO
+			film_actor(
+						actor_id,
+						film_id
+			) VALUES (
+						#{actorId},
+						#{filmId}
+			)
+	</insert>
+	
+	
+	
+	<!-- actor(배우) -->
 	<select id="selectFilmActorListByFilm" parameterType="int" resultType="java.util.Map">
 		SELECT 
 			a.actor_id actorId,

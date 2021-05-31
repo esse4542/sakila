@@ -2,6 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
 	
+	<select id="selectCustomerList" resultType="com.gd.sakila.vo.CustomerList" parameterType="java.util.Map">
+		SELECT 
+			ID ID,
+			name name,
+			address address,
+			'zip code' zipCode,
+			phone phone,
+			city city,
+			country country,
+			notes notes,
+			SID SID
+		FROM customer_list
+		<where>
+			<if test="searchWord != null">
+				AND name LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+		ORDER BY ID ASC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	
+	<select id="selectCustomerTotal" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(*)
+		FROM customer_list
+		<where>
+			<if test="searchWord != null">
+				AND name LIKE CONCAT('%',#{searchWord},'%')>
+			</if>
+		</where>
+	</select>
+	
+	
+	
 	<update id="updateCustomerActiveByScheduler">
 		UPDATE customer
 		SET active = 0

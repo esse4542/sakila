@@ -46,7 +46,7 @@
             </tr>
             <tr>
                    <td>rentalRate :</td>
-                   <td>${filmMap.rentalRate}</td>
+                    <td>${filmMap.rentalRate}</td>
             </tr>
             <tr>
                    <td>length :</td>

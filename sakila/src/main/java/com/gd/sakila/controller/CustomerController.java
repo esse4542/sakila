@@ -20,35 +20,50 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/admin")
-public class CustomerListController {
+public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 	
 	@GetMapping("/getCustomerList")
 	public String getCustomerList(Model model, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
 									@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage,
-									@RequestParam(value = "searchWord", required = false) String searchWord) {
+									@RequestParam(value = "searchWord", required = false) String searchWord ) {
 		log.debug("CustomerListController에서 CustomerListController -> currentPage: "+currentPage);
 		log.debug("CustomerListController에서 CustomerListController -> rowPerPage: "+rowPerPage);
 		log.debug("CustomerListController에서 CustomerListController -> searchWord: "+searchWord);
 		
+		// beginRow
 		int beginRow = (currentPage-1) * rowPerPage;
 		log.debug("CustomerListController에서 CustomerListController -> beginRow: "+beginRow);
 
+		// customerTotal
+		int customerTotal = customerService.getCustomerTotal(searchWord);
+		log.debug("CustomerListController에서 CustomerListController -> customerTotal: "+customerTotal);
+		
+		// lastPage
+		int lastPage = customerTotal / rowPerPage;
+		if(customerTotal / rowPerPage != 0) { //나누어 떨어지지 않으면
+			lastPage++; 
+		}
+		log.debug("CustomerListController에서 CustomerListController -> lastPage: "+lastPage);
+		
+		// map에 파라미터 데이터를 넣어줌. (
 		Map<String, Object> map = new HashMap<>();
-		map.put("currentPage", currentPage);
 		map.put("rowPerPage", rowPerPage);
 		map.put("searchWord", searchWord);
 		map.put("beginRow", beginRow);
+
 		
-		List<CustomerList> list = customerService.getCustomerList(map);
-		log.debug("CustomerListController에서 CustomerListController -> list: "+list);
+		// customerList
+		List<CustomerList> customerList = customerService.getCustomerList(map);
+		log.debug("CustomerListController에서 CustomerListController -> customerlist: "+customerList);
 		
-		model.addAttribute("list", list);
+		model.addAttribute("customerList", customerList);
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
 		
 		return "getCustomerList";
 	}

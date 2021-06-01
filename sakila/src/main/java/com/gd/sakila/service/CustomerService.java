@@ -22,9 +22,18 @@ public class CustomerService {
    
    // customer 리스트 구현
    public List<CustomerList> getCustomerList(Map<String, Object> map) {
-
+	   log.debug("*************CustomerService에서 CustomerService -> map :"+map);
+	  
 	   return customerMapper.selectCustomerList(map);
    }
+   
+   // customer total 구현
+   public int getCustomerTotal(String searchWord) {
+	   log.debug("*************CustomerService에서 CustomerService -> searchWord :"+searchWord);
+	  
+	   return customerMapper.selectCustomerTotal(searchWord);
+   }
+   
    
    
    public void modifyCustomerActiveByScheduler() {

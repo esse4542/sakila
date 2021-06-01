@@ -7,7 +7,7 @@
 			ID ID,
 			name name,
 			address address,
-			'zip code' zipCode,
+			`zip code` zipCode,
 			phone phone,
 			city city,
 			country country,
@@ -29,7 +29,7 @@
 		FROM customer_list
 		<where>
 			<if test="searchWord != null">
-				AND name LIKE CONCAT('%',#{searchWord},'%')>
+				AND name LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
 	</select>

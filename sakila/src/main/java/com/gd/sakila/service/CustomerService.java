@@ -35,6 +35,12 @@ public class CustomerService {
    }
    
    
+   // 블랙리스트 구현
+   public List<Map<String, Object>> getBlackCustomerList() {
+
+	   return customerMapper.selectBlackCustomerList();
+   }
+   
    
    public void modifyCustomerActiveByScheduler() {
       log.debug("▶▶▶▶▶▶▶ modifyCustomerActiveByScheduler() 실행");

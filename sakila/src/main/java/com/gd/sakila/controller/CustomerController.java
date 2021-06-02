@@ -54,11 +54,17 @@ public class CustomerController {
 		map.put("beginRow", beginRow);
 
 		
+		// 블랙리스트 
+		List<Map<String, Object>> blackCustomerList = customerService.getBlackCustomerList();
+		log.debug("CustomerListController에서 CustomerListController -> blackCustomerList: "+blackCustomerList);
+		
+		
 		// customerList
 		List<CustomerList> customerList = customerService.getCustomerList(map);
 		log.debug("CustomerListController에서 CustomerListController -> customerlist: "+customerList);
 		
 		model.addAttribute("customerList", customerList);
+		model.addAttribute("blackCustomerList", blackCustomerList);
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("rowPerPage", rowPerPage);

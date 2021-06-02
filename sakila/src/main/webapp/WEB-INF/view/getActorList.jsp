@@ -28,12 +28,13 @@ $(document).ready(function() {
 	
 	
 	<ul>
-		<li><a href="${pageContext.request.contextPath}/home">홈</a></li>
+		<li><a href="${pageContext.request.contextPath}/home">home</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a></li>
-		<li><a href="${pageContext.request.contextPath}/admin/getCustomerList">Customer</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a></li>
 	</ul>
 	
 	

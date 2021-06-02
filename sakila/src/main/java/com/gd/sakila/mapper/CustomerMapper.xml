@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
 	
+	<select id="selectBlackCustomerList" resultType="java.util.Map"> <!-- #으로 들어가는 값이 없기때문에 파라미터 x -->
+		SELECT 
+			c.customer_id ID, 
+			CONCAT(c.first_name,' ',c.last_name) AS NAME,
+			COUNT(*) AS overdue
+		FROM customer c, rental r, inventory i, film f
+		WHERE c.customer_id = r.customer_id
+			AND r.inventory_id = i.inventory_id
+			AND i.film_id = f.film_id
+			AND DATEDIFF(r.return_date, r.rental_date) > f.rental_duration
+		GROUP BY NAME
+		HAVING COUNT(*) > 20
+	</select>
+	
 	<select id="selectCustomerList" resultType="com.gd.sakila.vo.CustomerList" parameterType="java.util.Map">
 		SELECT 
 			ID ID,

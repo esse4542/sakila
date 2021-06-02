@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>getFilmList</title>
+<meta charset="UTF-8">
+<title>InventoryList</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -17,16 +17,14 @@
 $(document).ready(function() {
 	 $('#btn').click(function() {
 		 console.log('btn click...');
-        $('#customerForm').submit();   
+        $('#inventoryForm').submit();   
      });  
 });
 </script>
-<title>CustomerList</title>
 </head>
 <body>
 <div class="container">
-	
-	<h2>고객</h2>
+	<h2>InventoryList</h2>
 	<ul>
 		<li><a href="${pageContext.request.contextPath}/home">home</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a></li>
@@ -37,33 +35,8 @@ $(document).ready(function() {
 		<li><a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a></li>
 	</ul>
 	
-	<h2>블랙 리스트</h2>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>name</th>
-				<th>연체 횟수</th>
-			</tr>
-		</thead>
-		
-		<tbody>
-			<c:forEach var="b" items="${blackCustomerList}">
-				<tr>
-					<td>${b.ID}</td>
-					<td>${b.NAME}</td>
-					<td>${b.overdue}</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	
-	
-	
-	
-	<h2>CustomerList</h2>
 	<div>
-		<form id="customerForm" action="${pageContext.request.contextPath}/admin/getCustomerList" method="get">
+		<form id="inventoryForm" action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
 			Name :
 		 	<input type="text" name="searchWord" value="${searchWord}">
 		 	
@@ -74,30 +47,22 @@ $(document).ready(function() {
 		<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th>name</th>
-				<th>address</th>
-				<th>zipCode</th>
-				<th>phone</th>
-				<th>city</th>
-				<th>country</th>
-				<th>notes</th>
-				<th>SID</th>
+				<th>storeId</th>
+				<th>title</th>
+				<th>totalInventory</th>
+				<th>rental</th>
+				<th>stock</th>
 			</tr>
 		</thead>
 		
 		<tbody>
-			<c:forEach var="c" items="${customerList}">
+			<c:forEach var="i" items="${inventoryList}">
 				<tr>
-					<td>${c.ID}</td>
-					<td>${c.name}</td>
-					<td>${c.address}</td>
-					<td>${c.zipCode}</td>
-					<td>${c.phone}</td>
-					<td>${c.city}</td>
-					<td>${c.country}</td>
-					<td>${c.notes}</td>
-					<td>${c.SID}</td>
+					<td>${i.storeId}</td>
+					<td>${i.title}</td>
+					<td>${i.totalInventory}</td>
+					<td>${i.rental}</td>
+					<td>${i.stock}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -106,10 +71,10 @@ $(document).ready(function() {
 	<!-- 페이징 -->
     <ul class="pager">
         <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
+            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
         </c:if>
         <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
+            <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
         </c:if>
     </ul>
 </div>	

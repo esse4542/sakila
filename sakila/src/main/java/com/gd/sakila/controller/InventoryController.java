@@ -33,6 +33,16 @@ public class InventoryController {
 		log.debug("*************InventoryController에서 getInventoryList -> rowPerPage :"+rowPerPage);
 		log.debug("*************InventoryController에서 getInventoryList -> searchWord :"+searchWord);
 		
+		// 검색과 카테고리 코드(카테고리 나오려면 해줘야함)
+		if (searchWord != null && searchWord.equals("")) { 
+			searchWord = null;
+		}
+		if(storeId != null && storeId == 0) {
+			storeId = null;
+		}
+		
+		
+		
 		// beginRow
 		int beginRow = (currentPage-1)* rowPerPage;
 		log.debug("*************InventoryController에서 getInventoryList -> beginRow :"+beginRow);
@@ -41,7 +51,7 @@ public class InventoryController {
 		// map에 파라미터 데이터를 넣어줌
 		Map<String, Object> map = new HashMap<>();
 		log.debug("*************InventoryController에서 getInventoryList -> map :"+map);
-		
+		map.put("storeId", storeId); // storeId를 넘겨줘야함.
 		map.put("rowPerPage", rowPerPage);
 		map.put("searchWord", searchWord);
 		map.put("beginRow", beginRow);
@@ -71,6 +81,7 @@ public class InventoryController {
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("storeId",storeId);
 		
 		return "getInventoryList";
 	}

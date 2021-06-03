@@ -37,7 +37,28 @@ $(document).ready(function() {
 	
 	<div>
 		<form id="inventoryForm" action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
-			Name :
+			<!-- store 카테고리 -->
+			Store:
+			<select name="storeId"> <!-- name="storeId" -->
+				<option value="0">선택</option>
+					<c:if test="${storeId == 1}">
+			 			<option value="1" selected="selected">1호점</option>
+			 		</c:if>
+			 		<c:if test="${storeId != 1}">
+			 			<option value="1">1호점</option>
+			 		</c:if>
+			 		<c:if test="${storeId == 2}">
+			 			<option value="2" selected="selected">2호점</option>
+			 		</c:if>
+			 		<c:if test="${storeId != 2}">
+			 			<option value="2">2호점</option>
+			 		</c:if>
+	    	</select>
+			
+			
+			
+			<!-- 검색창 -->
+			Title :
 		 	<input type="text" name="searchWord" value="${searchWord}">
 		 	
 		 	<button id="btn" type="button">검색</button>
@@ -71,10 +92,10 @@ $(document).ready(function() {
 	<!-- 페이징 -->
     <ul class="pager">
         <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
+            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage-1}&searchWord=${searchWord}&storeId=${storeId}">이전</a></li>
         </c:if>
         <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
+            <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}&storeId=${storeId}">다음</a></li>
         </c:if>
     </ul>
 </div>	

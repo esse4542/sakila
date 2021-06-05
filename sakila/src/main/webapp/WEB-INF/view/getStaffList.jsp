@@ -16,7 +16,7 @@
 <body>
 <div class="container">
     <h2>StaffList</h2>
-    <ul>
+   <ul>
 		<li><a href="${pageContext.request.contextPath}/home">home</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a></li>
@@ -24,6 +24,7 @@
 		<li><a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a></li>
 	</ul>
     <br>
     

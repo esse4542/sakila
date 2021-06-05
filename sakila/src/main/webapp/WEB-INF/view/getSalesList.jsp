@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>InventoryList</title>
+<title>Insert title here</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -17,14 +17,14 @@
 $(document).ready(function() {
 	 $('#btn').click(function() {
 		 console.log('btn click...');
-        $('#inventoryForm').submit();   
+        $('#IDForm').submit();   
      });  
 });
 </script>
 </head>
 <body>
 <div class="container">
-	<h2>InventoryList</h2>
+	<h2>SalesList</h2>
 	<ul>
 		<li><a href="${pageContext.request.contextPath}/home">home</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a></li>
@@ -36,69 +36,74 @@ $(document).ready(function() {
 		<li><a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a></li>
 	</ul>
 	
-	<div>
-		<form id="inventoryForm" action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
-			<!-- store 카테고리 -->
-			Store:
-			<select name="storeId"> <!-- name="storeId" -->
-				<option value="0">선택</option>
-					<c:if test="${storeId == 1}">
-			 			<option value="1" selected="selected">1호점</option>
-			 		</c:if>
-			 		<c:if test="${storeId != 1}">
-			 			<option value="1">1호점</option>
-			 		</c:if>
-			 		<c:if test="${storeId == 2}">
-			 			<option value="2" selected="selected">2호점</option>
-			 		</c:if>
-			 		<c:if test="${storeId != 2}">
-			 			<option value="2">2호점</option>
-			 		</c:if>
-	    	</select>
-			
-			
-			
-			<!-- 검색창 -->
-			Title :
-		 	<input type="text" name="searchWord" value="${searchWord}">
-		 	
-		 	<button id="btn" type="button">검색</button>
-		</form>
-	</div>
+	<!-- 베스트셀러 목록 -->
+	<h2>BestSellerList</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Film Title</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="b" items="${bestSellerList}">
+                <tr>
+                	<td>${b.title}</td>
+                	<td>${b.cnt}</td>
+            </c:forEach>
+        </tbody>
+    </table>
+    
+    <h2>월별 매출 리스트</h2>
+    <!-- 매장별 조회 -->
+    <form id="IDForm" action="${pageContext.request.contextPath}/admin/getSalesList" method="get">
+   		Store:
+		<select name="storeId">
+			<option value="0">선택</option>
+				<c:if test="${storeId == 1}">
+		 			<option value="1" selected="selected">1호점</option>
+		 		</c:if>
+		 		<c:if test="${storeId != 1}">
+		 			<option value="1">1호점</option>
+		 		</c:if>
+		 		<c:if test="${storeId == 2}">
+		 			<option value="2" selected="selected">2호점</option>
+		 		</c:if>
+		 		<c:if test="${storeId != 2}">
+		 			<option value="2">2호점</option>
+		 		</c:if>
+    	</select>
+    	<button id="btn" type="button">조회</button>
+	</form>
 	
-		<table class="table table-striped">
+	
+	<!-- 월별 매출액 리스트 -->
+	
+	<table class="table table-striped">
 		<thead>
-			<tr>
-				<th>storeId</th>
-				<th>title</th>
-				<th>totalInventory</th>
-				<th>rental</th>
-				<th>stock</th>
+	  		<tr>
+	  			<th>storeId</th>
+				<th>store</th>
+				<th>manager</th>
+				<th>YEAR</th>
+				<th>MONTH</th>
+				<th>total Sales</th>
 			</tr>
 		</thead>
-		
 		<tbody>
-			<c:forEach var="i" items="${inventoryList}">
+			<c:forEach var="m" items="${monthlySalesList}">
 				<tr>
-					<td>${i.storeId}</td>
-					<td>${i.title}</td>
-					<td>${i.totalInventory}</td>
-					<td>${i.rental}</td>
-					<td>${i.stock}</td>
+					<td>${m.storeId}</td>
+					<td>${m.store}</td>
+					<td>${m.manager}</td>
+					<td>${m.YEAR}</td>
+					<td>${m.MONTH}</td>
+					<td>${m.totalSales}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
-	</table>
+   	</table>
 	
-	<!-- 페이징 -->
-    <ul class="pager">
-        <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage-1}&searchWord=${searchWord}&storeId=${storeId}">이전</a></li>
-        </c:if>
-        <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}&storeId=${storeId}">다음</a></li>
-        </c:if>
-    </ul>
-</div>	
+</div>
 </body>
 </html>

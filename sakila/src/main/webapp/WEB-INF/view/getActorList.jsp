@@ -35,8 +35,8 @@ $(document).ready(function() {
 		<li><a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a></li>
 	</ul>
-	
 	
 	<div>
 		<form id="actorForm" action="${pageContext.request.contextPath}/admin/getActorList" method="get">

@@ -41,6 +41,14 @@ public class CustomerService {
 	   return customerMapper.selectBlackCustomerList();
    }
    
+   // 고객 상세보기
+   public Map<String, Object> getCustomerOne(Integer ID) {
+	  log.debug("*************CustomerService에서 getCustomerOne -> ID :"+ID);
+	   
+	  return customerMapper.selectCustomerOne(ID);
+   }
+  
+   
    
    public void modifyCustomerActiveByScheduler() {
       log.debug("▶▶▶▶▶▶▶ modifyCustomerActiveByScheduler() 실행");

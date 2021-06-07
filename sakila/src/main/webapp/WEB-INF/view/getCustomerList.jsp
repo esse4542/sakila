@@ -26,7 +26,7 @@ $(document).ready(function() {
 <body>
 <div class="container">
 	
-	<h2>고객</h2>
+	<h2>고객 리스트</h2>
 	<ul>
 		<li><a href="${pageContext.request.contextPath}/home">home</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a></li>
@@ -35,6 +35,7 @@ $(document).ready(function() {
 		<li><a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a></li>
 	</ul>
 	
 	<h2>블랙 리스트</h2>
@@ -63,6 +64,7 @@ $(document).ready(function() {
 	
 	<h2>CustomerList</h2>
 	<div>
+		<!-- 검색창 -->
 		<form id="customerForm" action="${pageContext.request.contextPath}/admin/getCustomerList" method="get">
 			Name :
 		 	<input type="text" name="searchWord" value="${searchWord}">
@@ -77,11 +79,7 @@ $(document).ready(function() {
 				<th>ID</th>
 				<th>name</th>
 				<th>address</th>
-				<th>zipCode</th>
 				<th>phone</th>
-				<th>city</th>
-				<th>country</th>
-				<th>notes</th>
 				<th>SID</th>
 			</tr>
 		</thead>
@@ -90,13 +88,9 @@ $(document).ready(function() {
 			<c:forEach var="c" items="${customerList}">
 				<tr>
 					<td>${c.ID}</td>
-					<td>${c.name}</td>
-					<td>${c.address}</td>
-					<td>${c.zipCode}</td>
+					<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${c.ID}">${c.name}</a></td>
+					<td>${c.address}</td>	
 					<td>${c.phone}</td>
-					<td>${c.city}</td>
-					<td>${c.country}</td>
-					<td>${c.notes}</td>
 					<td>${c.SID}</td>
 				</tr>
 			</c:forEach>

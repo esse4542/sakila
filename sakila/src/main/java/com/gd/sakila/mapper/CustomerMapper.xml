@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
 	
+	<select id="selectCustomerOne" resultType="java.util.Map" parameterType="Integer">
+		SELECT
+			ID,
+			name,
+			address,
+			`zip code` zipCode,
+			phone,
+			city,
+			country,
+			notes,
+			SID
+		FROM
+			customer_list
+		WHERE ID = #{ID}		
+	</select>
+	
+	
+	
 	<select id="selectBlackCustomerList" resultType="java.util.Map"> <!-- #으로 들어가는 값이 없기때문에 파라미터 x -->
 		SELECT 
 			c.customer_id ID, 

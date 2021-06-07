@@ -47,7 +47,7 @@ public class SalesController {
 		// model
 		model.addAttribute("bestSellerList", bestSellerList);
 		model.addAttribute("salesByCategoryList", salesByCategoryList);
-		model.addAttribute("monthlySalesListList", monthlySalesList);
+		model.addAttribute("monthlySalesList", monthlySalesList);
 		model.addAttribute("storeId", storeId);
 		
 		

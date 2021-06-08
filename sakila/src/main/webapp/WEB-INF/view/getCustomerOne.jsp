@@ -56,7 +56,6 @@
     </table>
     	<div>
 		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList?">글목록</a>
-		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer">addCustomer</a>		
     	</div>
 	
 </div>

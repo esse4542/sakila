@@ -9,6 +9,8 @@ import com.gd.sakila.vo.CustomerList;
 
 @Mapper
 public interface CustomerMapper {
+	// 고객 추가
+	int insertCustomer(Map<String, Object> map);
 	// 블랙리스트
 	List<Map<String, Object>> selectBlackCustomerList();
 	// 전체 고객 리스트

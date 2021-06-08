@@ -2,6 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
 	
+	
+	<!-- 고객 추가 -->
+	<insert id="insertCustomer" parameterType="java.util.Map">
+		INSERT INTO customer(
+	         store_id,
+	         first_name,
+	         last_name,
+	         email,
+	         address_id,
+	         active,
+	         create_date
+      ) VALUES (
+	         #{storeId},
+	         #{firstName},
+	         #{lastName},
+	         #{email},
+	         #{addressId},
+	         #{active},
+	         NOW()
+      )
+   </insert>
+	
+	
+	
+	<!-- 상세보기 -->
 	<select id="selectCustomerOne" resultType="java.util.Map" parameterType="Integer">
 		SELECT
 			ID,
@@ -19,7 +44,7 @@
 	</select>
 	
 	
-	
+	<!-- 블랙 리스트 -->
 	<select id="selectBlackCustomerList" resultType="java.util.Map"> <!-- #으로 들어가는 값이 없기때문에 파라미터 x -->
 		SELECT 
 			c.customer_id ID, 
@@ -34,6 +59,8 @@
 		HAVING COUNT(*) > 20
 	</select>
 	
+	
+	<!-- 고객 리스트 -->
 	<select id="selectCustomerList" resultType="com.gd.sakila.vo.CustomerList" parameterType="java.util.Map">
 		SELECT 
 			ID ID,
@@ -51,11 +78,12 @@
 				AND name LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
-		ORDER BY ID ASC
+		ORDER BY ID DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	
+	<!-- Total리스트 -->
 	<select id="selectCustomerTotal" resultType="int" parameterType="java.util.Map">
 		SELECT COUNT(*)
 		FROM customer_list

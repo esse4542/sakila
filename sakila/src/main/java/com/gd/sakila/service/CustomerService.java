@@ -20,6 +20,14 @@ public class CustomerService {
    @Autowired 
    CustomerMapper customerMapper;
    
+   // 고객 추가
+   public int addCustomer(Map<String, Object> map) {
+	   
+	   return customerMapper.insertCustomer(map);
+   }
+   
+   
+   
    // customer 리스트 구현
    public List<CustomerList> getCustomerList(Map<String, Object> map) {
 	   log.debug("*************CustomerService에서 CustomerService -> map :"+map);

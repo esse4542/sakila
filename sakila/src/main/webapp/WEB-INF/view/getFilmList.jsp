@@ -189,7 +189,9 @@
             </c:forEach>
         </tbody>
     </table>
-    
+    <div>
+    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm">addFilm</a>	
+    </div>
 
 	<!-- 페이징 -->
     <ul class="pager">

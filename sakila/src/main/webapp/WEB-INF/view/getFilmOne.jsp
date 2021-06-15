@@ -87,8 +87,7 @@
         </tbody>
     </table>
     	<div>
-		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage}&searchWord=${searchWord}&category=${category}&rating=${rating}&rentalRate=${rentalRate}&searchActor=${searchActor}">글목록</a>
-		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm">addFilm</a>		
+		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage}&searchWord=${searchWord}&category=${category}&rating=${rating}&rentalRate=${rentalRate}&searchActor=${searchActor}">글목록</a>	
     	</div>
 	
 </div>

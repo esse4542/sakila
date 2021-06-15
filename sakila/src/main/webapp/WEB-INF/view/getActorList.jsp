@@ -62,12 +62,15 @@ $(document).ready(function() {
 			<c:forEach var="a" items="${actorList}">
 			<tr>
 				<td>${a.actorId}</td>
-				<td><a href="${pageContext.request.contextPath}/admin/addActor?actorId=${a.actorId}">${a.name}</a></td>
+				<td>${a.name}</td>
 				<td>${a.filmInfo}</td>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	<div>
+		 <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addActor">배우 등록</a>
+	</div>
 	
 	
 	<!-- 페이징 -->

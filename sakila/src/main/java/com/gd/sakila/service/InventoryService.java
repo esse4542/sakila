@@ -18,6 +18,19 @@ public class InventoryService {
 	@Autowired
 	InventoryMapper inventoryMapper;
 	
+	// 재고 삭제
+	public int removeInventory(int inventoryId) {
+		log.debug("*************InventoryService에서 getInventoryList -> inventoryId :"+ inventoryId);
+		return inventoryMapper.deleteInventory(inventoryId);
+	}
+	
+	// 재고 추가
+	public int insertInventory(Map<String, Object> map) {
+		log.debug("*************InventoryService에서 getInventoryList -> map :"+ map);
+		return inventoryMapper.insertInventory(map);
+	}
+
+	
 	// 재고 목록
 	public List<Map<String, Object>> getInventoryList(Map<String, Object> map) {
 		log.debug("*************InventoryService에서 getInventoryList -> map :"+map);

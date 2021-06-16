@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.InventoryService;
-import com.gd.sakila.vo.CustomerList;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +22,60 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryController {
 	@Autowired
 	InventoryService inventoryService;
+	
+	// 재고 삭제
+	@GetMapping("/removeInventory")
+	public String removeInventory(Model model, @RequestParam(value = "inventoryId", required = false) Integer inventoryId) {
+		log.debug("*************InventoryController에서 removeInventory -> inventoryId :"+inventoryId);
+		
+		model.addAttribute("inventoryId", inventoryId);
+		return "removeInventory";
+	}
+	
+	@PostMapping("removeInventory")
+	public String removeInventory(@RequestParam(value = "inventoryId", required = false) Integer inventoryId) {	
+		log.debug("*************InventoryController에서 removeInventory -> inventoryId :" + inventoryId);
+		
+		// 삭제 
+		int deleteRow = inventoryService.removeInventory(inventoryId);
+		log.debug("*************InventoryController에서 removeInventory -> inventoryId :"+deleteRow);
+		
+		// deleteRow가 0이면
+		if(deleteRow == 0) {
+			return "redirect:/admin/removeInventory";
+		}
+		return "redirect:/admin/getInventoryList";
+	}
+	
+	// 재고 추가
+	@GetMapping("/addInventory")
+	public String addInventory() {
+		
+		return "addInventory";
+	}
+	
+	@PostMapping("/addInventory")
+	public String addInventory(Model model, @RequestParam(value = "filmId", required = true)int filmId,
+								@RequestParam(value = "storeId", required = true) int storeId) {
+		log.debug("*************InventoryController에서 addInventory -> filmId :" + filmId);
+		log.debug("*************InventoryController에서 addInventory -> storeId :" + storeId);
+		
+		// map 만들어주기
+		Map<String, Object> map = new HashMap<>();
+		map.put("filmId", filmId);
+		map.put("storeId", storeId);
+		
+		// inventoryService 불러오기
+		int returnMap = inventoryService.insertInventory(map);
+		log.debug("*************InventoryController에서 addInventory -> returnMap :" + returnMap);
+		
+		model.addAttribute("storeId", storeId);
+
+		return "redirect:/admin/getInventoryList";
+	}
+
+	
+	
 	
 	@GetMapping("/getInventoryList")
 	public String getInventoryList(Model model, @RequestParam(value = "storeId", required = false ) Integer storeId,

@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.InventoryMapper">
-
+	
+	<!-- 재고 추가 -->
+	<insert id="insertInventory" parameterType="java.util.Map">
+		INSERT INTO inventory(
+			film_id,
+			store_id
+		)VALUES(
+			#{filmId},
+			#{storeId}
+		)
+	</insert>
+	
+	
+	<!-- 재고 삭제 -->
+	<delete id="deleteInventory" parameterType="Integer">
+		DELETE FROM inventory 
+		WHERE inventory_id = #{inventoryId}
+	</delete>
+	
+	
+	
+	<!-- 재고 리스트 -->
 	<select id="selectInventoryList" resultType="java.util.Map" parameterType="java.util.Map">
       SELECT 	
 			i.store_id storeId, 
@@ -23,10 +44,10 @@
 			i.film_id,
 			i.store_id
 		LIMIT #{beginRow}, #{rowPerPage}
-   </select>
+	</select>
 
 
-	
+	<!-- 재고 total -->
 	<select id="selectInventoryTotal" resultType="Integer" parameterType="java.util.Map">
        SELECT COUNT(*)
        FROM 
